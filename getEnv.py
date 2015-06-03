@@ -37,11 +37,3 @@ class env:
         eosText+=' ls /eos/cms/store/relval/' + self.getCMSSWBASECMSSWVERSION()
         return eosText
 				
-    def listeElectronsDirs2(self):
-        print "***", self.getEOSCHEMIN() # -> OK !
-#        dirs = os.listdir('.')
-        dirs = os.listdir(self.getEOSCHEMIN())
-        # This would print all the files and directories
-#        for file in dirs:
-#            print file
-        return dirs

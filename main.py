@@ -15,7 +15,8 @@ def main(args):
     a=QApplication(args)
     # Création d'un widget qui servira de fenêtre
     fenetre=ovalGui.ovalGui()
-    fenetre.move(100, 500)
+#    fenetre.move(1000, 500)
+    fenetre.resize(1000, 600)
     fenetre.show()
     r=a.exec_()
     return r
