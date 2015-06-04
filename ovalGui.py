@@ -13,7 +13,7 @@ from fonctions import liste
 class ovalGui(QWidget):
     def __init__(self):
         QWidget.__init__(self)
-        self.setWindowTitle('ValDB Gui v0.2')
+        self.setWindowTitle('ValDB Gui v0.9')
         self.move(100, 100)
 
         self.cmsenv = env()
@@ -110,10 +110,10 @@ class ovalGui(QWidget):
     def extract(self):
         self.texte_s.clear()
         self.texte_l.clear()
-        texte_p = self.texte1.toPlainText()
+        texte_p = self.texte1.toPlainText().toUtf8()
         print texte_p
-        self.texte_s.append(texte_p)
-        self.texte_l.append(texte_p)
+        self.texte_s.append(self.trUtf8(texte_p))
+        self.texte_l.append(self.trUtf8(texte_p))
         self.bouton2.setStyleSheet("background-color: None") # default
         inter = texte_p.split(' ')
         i = 0
@@ -137,11 +137,11 @@ class ovalGui(QWidget):
         self.compteur_l.setText(self.trUtf8(t_l))
         len_s = len(self.texte_s.toPlainText())
         len_l = len(self.texte_l.toPlainText())
-        if len_s > 20:
+        if len_s > 3500:
             self.compteur_s.setStyleSheet("background-color: red; color: white")
         else:
             self.compteur_s.setStyleSheet("background-color: None")
-        if len_l > 20:
+        if len_l > 3500:
             self.compteur_l.setStyleSheet("background-color: red; color: white")
         else:
             self.compteur_l.setStyleSheet("background-color: None")
