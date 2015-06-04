@@ -8,14 +8,10 @@ from PyQt4.QtCore import *
 import os,sys
 import ovalGui
 
-from getEnv import env
-from fonctions import liste
-		
 def main(args):
     a=QApplication(args)
     # Création d'un widget qui servira de fenêtre
     fenetre=ovalGui.ovalGui()
-#    fenetre.move(1000, 500)
     fenetre.resize(1000, 600)
     fenetre.show()
     r=a.exec_()

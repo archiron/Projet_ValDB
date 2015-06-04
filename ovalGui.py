@@ -7,22 +7,12 @@ from PyQt4 import QtCore
 
 import os, sys, re
 
-from getEnv import env
-from fonctions import liste
-		
 class ovalGui(QWidget):
     def __init__(self):
         QWidget.__init__(self)
         self.setWindowTitle('ValDB Gui v0.9')
         self.move(100, 100)
 
-        self.cmsenv = env()
-        self.texte = self.cmsenv.cmsAll()
-        
-		# creation du label
-        self.label = QLabel(self.trUtf8(self.texte), self)
-#        self.label.move(10, 20)
-        
 		# creation du compteur principal
         self.compteur_p = QLabel(self.trUtf8("0"), self)
         
@@ -89,7 +79,6 @@ class ovalGui(QWidget):
         self.layout_general = QVBoxLayout()
         self.layout_general.addWidget(self.texte1)
         self.layout_general.addWidget(self.compteur_p)
-        self.layout_general.addWidget(self.label)
         self.layout_general.addLayout(self.layoutH_boutons)
         self.layout_general.addLayout(self.layoutH_textes)
         self.layout_general.addLayout(self.layoutH_compteurs)
@@ -99,10 +88,10 @@ class ovalGui(QWidget):
         self.texte1.clear()
         self.texte_s.clear()
         self.texte_l.clear()
-        t_s = str(len(self.texte_s.toPlainText()))
-        t_l = str(len(self.texte_l.toPlainText()))
-        self.compteur_s.setText(self.trUtf8(t_s))
-        self.compteur_l.setText(self.trUtf8(t_l))
+        self.t_s = str(len(self.texte_s.toPlainText()))
+        self.t_l = str(len(self.texte_l.toPlainText()))
+        self.compteur_s.setText(self.trUtf8(self.t_s))
+        self.compteur_l.setText(self.trUtf8(self.t_l))
         self.bouton2.setStyleSheet("background-color: None") # default
         self.compteur_s.setStyleSheet("background-color: None")
         self.compteur_l.setStyleSheet("background-color: None")
@@ -110,31 +99,33 @@ class ovalGui(QWidget):
     def extract(self):
         self.texte_s.clear()
         self.texte_l.clear()
-        texte_p = self.texte1.toPlainText().toUtf8()
-        print texte_p
-        self.texte_s.append(self.trUtf8(texte_p))
-        self.texte_l.append(self.trUtf8(texte_p))
+        self.texte_p = self.texte1.toPlainText().toUtf8()
+
+        self.texte_s.append(self.trUtf8(self.texte_p))
+        self.texte_l.append(self.trUtf8(self.texte_p))
         self.bouton2.setStyleSheet("background-color: None") # default
-        inter = texte_p.split(' ')
-        i = 0
         list_s = ''
         list_l = ''
 
-        tmp = re.findall(r'(https?://\S+)', str(texte_p))
-        list_s = texte_p
+        tmp = re.findall(r'(https?://\S+)', str(self.texte_p))
+        list_s = self.texte_p
         i = 0
         for item in tmp:
-            print item
-            list_s.replace(item, '[' + str(i) + ']')
-            list_l += '[' + str(i) + '] ' + item + '\r\r'
+#            print '[' , str(i) , '] ', item
+            list_l += '[' + str(i) + '] ' + str(item) + '\r\r'
             i += 1
+        i -= 1
+        for item in reversed(tmp):
+#            print '[' , str(i) , '] ', item
+            list_s.replace(item, '[' + str(i) + ']')
+            i -= 1
         
         self.texte_s.setText(self.trUtf8(list_s))
         self.texte_l.setText(self.trUtf8(list_l))
-        t_s = str(len(self.texte_s.toPlainText()))
-        t_l = str(len(self.texte_l.toPlainText()))
-        self.compteur_s.setText(self.trUtf8(t_s))
-        self.compteur_l.setText(self.trUtf8(t_l))
+        self.t_s = str(len(self.texte_s.toPlainText()))
+        self.t_l = str(len(self.texte_l.toPlainText()))
+        self.compteur_s.setText(self.trUtf8(self.t_s))
+        self.compteur_l.setText(self.trUtf8(self.t_l))
         len_s = len(self.texte_s.toPlainText())
         len_l = len(self.texte_l.toPlainText())
         if len_s > 3500:
@@ -147,7 +138,6 @@ class ovalGui(QWidget):
             self.compteur_l.setStyleSheet("background-color: None")
 
     def on_text_changed(self):
-#        print "text changed"
         self.bouton2.setStyleSheet("background-color: red; color: white") 
         symbols = str(len(self.texte1.toPlainText()))
         self.compteur_p.setText(self.trUtf8(symbols))
