@@ -1,6 +1,8 @@
 #! /usr/bin/env python
 #-*-coding: utf-8 -*-
 
+# All developements made by A. Chiron - 2015
+
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from PyQt4 import QtCore

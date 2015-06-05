@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 #-*-coding: utf-8 -*-
+# All developements made by A. Chiron - 2015
 
 #from PyQt import *
 from PyQt4.QtGui import *
